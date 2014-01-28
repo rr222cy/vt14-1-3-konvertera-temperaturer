@@ -11,12 +11,24 @@ namespace ConvertTemperatures
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            TempTable.Visible = false;
         }
 
         protected void ConvertButton_Click(object sender, EventArgs e)
         {
+            // Wow, such awesome here.
+            TempTable.Visible = true;
 
+            TableRow tRow = new TableRow();
+            TempTable.Rows.Add(tRow);
+
+            TableCell tCell = new TableCell();
+            tCell.Text = "Dummy 1";
+            TableCell tCell2 = new TableCell();
+            tCell2.Text = "Dummy 2";
+
+            tRow.Cells.Add(tCell);
+            tRow.Cells.Add(tCell2);
         }
     }
 }

@@ -60,11 +60,7 @@ section {
 
 table, th, td
 {
-    border: 1px solid;
-    border-collapse: collapse;
-    border-color: #353535;
-    padding: 8px;
-    text-align: center;
+    border: 0px solid;
 }
 
 th, thead, tfoot 
@@ -78,6 +74,16 @@ th, thead, tfoot
 
 .tempTablee {
     width: 100%;
+    border: 1px solid;
+
+}
+
+.tempTablee td {
+    border: 1px solid;
+    border-collapse: collapse;
+    border-color: #353535;
+    padding: 8px;
+    text-align: center;
 }
 
 
@@ -159,4 +165,29 @@ input {
 .inputSpacing {
     margin-bottom: 20px;
     width: 200px;
+}
+
+input[type="radio"]
+
+{
+border-style:none;
+}
+
+.borderless {
+    border-style: none;
+}
+
+
+/* List settings */
+
+
+ul {
+    padding-left: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+li {
+    list-style: circle;
+    padding-left: 10px;
 }
