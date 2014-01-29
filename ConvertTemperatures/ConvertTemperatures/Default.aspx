@@ -18,11 +18,7 @@
 
                 <%-- Dynamic table for conversion results presentation. --%>
                 <div id="tempTableDiv">
-                    <asp:Table ID="TempTable" runat="server" CssClass="tempTablee" Visible="False">
-                        <asp:TableRow runat="server" BorderStyle="Solid" BackColor="#333333" ForeColor="White">
-                            <asp:TableCell runat="server">ºC</asp:TableCell>
-                            <asp:TableCell runat="server">ºF</asp:TableCell>
-                        </asp:TableRow>       
+                    <asp:Table ID="TempTable" runat="server" CssClass="tempTable" Visible="False">                           
                     </asp:Table>
                 </div>
 
@@ -70,6 +66,8 @@
                 <div>
                 <asp:Button ID="ConvertButton" runat="server" Text="Konvertera" CssClass="standardButton" OnClick="ConvertButton_Click"></asp:Button>
                 </div>
+
+                <div style="clear: both;"></div>
             </section>
         </main>
     </div>
