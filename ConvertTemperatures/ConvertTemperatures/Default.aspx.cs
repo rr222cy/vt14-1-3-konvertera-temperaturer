@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ConvertTemperatures.Models;
 
 namespace ConvertTemperatures
 {
@@ -11,7 +12,8 @@ namespace ConvertTemperatures
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            TempTable.Visible = false;
+            // Sets focus on the starting textbox regardless of if the users browser support the autofocus feature.
+            StartTemp.Focus();
         }
 
         protected void ConvertButton_Click(object sender, EventArgs e)
@@ -25,12 +27,12 @@ namespace ConvertTemperatures
                 TempTable.Rows.Add(tRow);
 
                 TableCell tCell = new TableCell();
-                tCell.Text = "Dummy 1";
+                tCell.Text = TemperatureConverter.CelsiusToFahrenheit(12).ToString();
                 TableCell tCell2 = new TableCell();
-                tCell2.Text = "Dummy 2";
+                tCell2.Text = TemperatureConverter.FahrenheitToCelsius(12).ToString();
 
                 tRow.Cells.Add(tCell);
-                tRow.Cells.Add(tCell2);
+                tRow.Cells.Add(tCell2);              
             }
         }
     }

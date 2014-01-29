@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/Style.css">
 </head>
 <body>
- <form id="form1" runat="server">
+ <form id="form1" runat="server" defaultbutton="ConvertButton">
     <div id="container">
         <header id="header">
             <h1>Konvertera temperaturer</h1>
@@ -18,7 +18,7 @@
 
                 <%-- Dynamic table for conversion results presentation. --%>
                 <div id="tempTableDiv">
-                    <asp:Table ID="TempTable" runat="server" CssClass="tempTablee">
+                    <asp:Table ID="TempTable" runat="server" CssClass="tempTablee" Visible="False">
                         <asp:TableRow runat="server" BorderStyle="Solid" BackColor="#333333" ForeColor="White">
                             <asp:TableCell runat="server">ºC</asp:TableCell>
                             <asp:TableCell runat="server">ºF</asp:TableCell>
@@ -44,6 +44,7 @@
                 <asp:TextBox ID="StopTemp" runat="server" CssClass="inputSpacing"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Fyll i en sluttemp." Text="*" Display="Dynamic" ControlToValidate="StopTemp" CssClass="field-validation-error"></asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="CompareValidator2" runat="server" ErrorMessage="Ange ett heltal." Text="*" Display="Dynamic" Type="Integer" ControlToValidate="StopTemp" Operator="DataTypeCheck"></asp:CompareValidator>
+                <asp:CompareValidator ID="CompareValidator4" runat="server" ErrorMessage="Sluttemp måste vara högre än starttemp." Text="*" ControlToValidate="StopTemp" ControlToCompare="StartTemp" Display="Dynamic" Operator="GreaterThan" Type="Integer"></asp:CompareValidator>
                 </div>
                 
                 <%-- Input and validation for temperature steps. --%>
@@ -52,13 +53,14 @@
                 <asp:TextBox ID="TempStep" runat="server" CssClass="inputSpacing"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Fyll i tempsteg." Text="*" Display="Dynamic" ControlToValidate="TempStep" CssClass="field-validation-error"></asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="CompareValidator3" runat="server" ErrorMessage="Ange ett heltal." Text="*" Display="Dynamic" Type="Integer" ControlToValidate="TempStep" Operator="DataTypeCheck"></asp:CompareValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Tempstegen måste vara i intervallet 1-100." Text="*" ControlToValidate="TempStep" MaximumValue="100" MinimumValue="1" Display="Dynamic" Type="Integer"></asp:RangeValidator>
                 </div>
 
                 <%-- Input and validation for type of temperature conversion. --%>
                 <div>
                 <asp:Label ID="TempConvertTypeLabel" runat="server" Text="Typ av konvertering:" AssociatedControlID="TempConvertType"></asp:Label>
                 <asp:RadioButtonList ID="TempConvertType" runat="server" BorderStyle="None" BorderWidth="0" CssClass="borderless">
-                    <asp:ListItem Selected="false">Celsius till Fahrenheit</asp:ListItem>
+                    <asp:ListItem Selected="True">Celsius till Fahrenheit</asp:ListItem>
                     <asp:ListItem>Fahrenheit till Celsius</asp:ListItem>
                 </asp:RadioButtonList>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Välj en konverteringstyp." Text="*" Display="Dynamic" ControlToValidate="TempConvertType" CssClass="field-validation-error"></asp:RequiredFieldValidator>
