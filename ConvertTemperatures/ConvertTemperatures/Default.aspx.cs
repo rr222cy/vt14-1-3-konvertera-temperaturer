@@ -7,9 +7,15 @@ using System.Web.UI.WebControls;
 using ConvertTemperatures.Models;
 
 namespace ConvertTemperatures
-{
+{   
     public partial class Default : System.Web.UI.Page
     {
+        enum ConvertType
+        {
+            CelciusToFahrenheit,
+            FahrenheitToCelsius
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // Sets focus on the starting textbox regardless of if the users browser support the autofocus feature.
@@ -26,66 +32,55 @@ namespace ConvertTemperatures
                 int startTemp = Int32.Parse(StartTemp.Text);
                 int stopTemp = Int32.Parse(StopTemp.Text);
                 int tempSteps = Int32.Parse(TempStep.Text);
+                string tempFrom = "";
+                string tempTo = "";
 
-                // Checking to see which radiobutton that is selected. 0 = C->F, 1= F->C.
-                if(TempConvertType.Items[0].Selected)
+                // Checking to see which radiobutton that is selected.
+                if (TempConvertType.Items[(int)ConvertType.CelciusToFahrenheit].Selected)
                 {
-                    TableHeaderRow tHeader = new TableHeaderRow();
-                    tHeader.CssClass = "tempTableHeader";
-                    TempTable.Rows.Add(tHeader);
-
-                    TableHeaderCell tCell = new TableHeaderCell();
-                    tCell.Text = "°C";
-                    TableHeaderCell tCell2 = new TableHeaderCell();
-                    tCell2.Text = "°F";
-
-                    tHeader.Cells.Add(tCell);
-                    tHeader.Cells.Add(tCell2);
-
-                    // Loop starting and stopping and stepping according to user input.
-                    for (int tempNow = startTemp; tempNow <= stopTemp; tempNow += tempSteps)
-                    {
-                        TableRow bHeader = new TableRow();
-                        TempTable.Rows.Add(bHeader);
-
-                        TableCell bCell = new TableCell();
-                        bCell.Text = tempNow.ToString();
-                        TableCell bCell2 = new TableCell();
-                        bCell2.Text = TemperatureConverter.CelsiusToFahrenheit(tempNow).ToString();
-
-                        bHeader.Cells.Add(bCell);
-                        bHeader.Cells.Add(bCell2);
-                    }
+                    tempFrom = "°C";
+                    tempTo = "°F";
                 }
-                else if(TempConvertType.Items[1].Selected)
+                else if (TempConvertType.Items[(int)ConvertType.FahrenheitToCelsius].Selected)
                 {
-                    TableHeaderRow tHeader = new TableHeaderRow();
-                    tHeader.CssClass = "tempTableHeader";
-                    TempTable.Rows.Add(tHeader);
+                    tempFrom = "°F";
+                    tempTo = "°C";
+                }
 
-                    TableHeaderCell tCell = new TableHeaderCell();
-                    tCell.Text = "°F";
-                    TableHeaderCell tCell2 = new TableHeaderCell();
-                    tCell2.Text = "°C";
+                // Prints out the table header according to conversion type.
+                TableHeaderRow tHeader = new TableHeaderRow();
+                tHeader.CssClass = "tempTableHeader";
+                TempTable.Rows.Add(tHeader);
 
-                    tHeader.Cells.Add(tCell);
-                    tHeader.Cells.Add(tCell2);
+                TableHeaderCell tCell = new TableHeaderCell();
+                tCell.Text = tempFrom;
+                TableHeaderCell tCell2 = new TableHeaderCell();
+                tCell2.Text = tempTo;
 
-                    // Loop starting and stopping and stepping according to user input.
-                    for (int tempNow = startTemp; tempNow <= stopTemp; tempNow += tempSteps)
+                tHeader.Cells.Add(tCell);
+                tHeader.Cells.Add(tCell2);
+
+                // Loop starting and stopping and stepping according to user input, creates rows and cells and inserts into table.
+                for (int tempNow = startTemp; tempNow <= stopTemp; tempNow += tempSteps)
+                {
+                    TableRow bHeader = new TableRow();
+                    TempTable.Rows.Add(bHeader);
+
+                    TableCell bCell = new TableCell();
+                    bCell.Text = tempNow.ToString();
+                    TableCell bCell2 = new TableCell();
+                    if (TempConvertType.Items[(int)ConvertType.CelciusToFahrenheit].Selected)
                     {
-                        TableRow bHeader = new TableRow();
-                        TempTable.Rows.Add(bHeader);
-
-                        TableCell bCell = new TableCell();
-                        bCell.Text = tempNow.ToString();
-                        TableCell bCell2 = new TableCell();
-                        bCell2.Text = TemperatureConverter.FahrenheitToCelsius(tempNow).ToString();
-
-                        bHeader.Cells.Add(bCell);
-                        bHeader.Cells.Add(bCell2);
+                        bCell2.Text = TemperatureConverter.CelsiusToFahrenheit(tempNow).ToString();
                     }
-                }             
+                    else if (TempConvertType.Items[(int)ConvertType.FahrenheitToCelsius].Selected)
+                    {
+                        bCell2.Text = TemperatureConverter.FahrenheitToCelsius(tempNow).ToString();
+                    }
+
+                    bHeader.Cells.Add(bCell);
+                    bHeader.Cells.Add(bCell2);
+                }
             }
         }
     }
